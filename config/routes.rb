@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :chat_interfaces do
+    resources :messages
+  end
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  devise_for :users
+
+  root to: 'chat_interfaces#index'
 end
