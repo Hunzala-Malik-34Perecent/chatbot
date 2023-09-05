@@ -1,53 +1,18 @@
 class ChatInterfacesController < ApplicationController
-  before_action :set_chat_interface, only: %i[ show edit update destroy ]
+  before_action :set_chat_interface, only: %i[ show ]
 
   def index
-    @chat_interfaces = ChatInterface.all
+    @chat_interfaces = ChatInterface.order(created_at: :desc)
   end
 
   def show
-  end
-
-  def new
-    @chat_interface = ChatInterface.new
-  end
-
-  def edit
+    @chat_interface
   end
 
   def create
-    @chat_interface = ChatInterface.new(chat_interface_params)
+    @chat_interface = current_user.chat_interfaces.create!
 
-    respond_to do |format|
-      if @chat_interface.save
-        format.html { redirect_to chat_interface_url(@chat_interface), notice: "Chat interface was successfully created." }
-        format.json { render :show, status: :created, location: @chat_interface }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @chat_interface.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def update
-    respond_to do |format|
-      if @chat_interface.update(chat_interface_params)
-        format.html { redirect_to chat_interface_url(@chat_interface), notice: "Chat interface was successfully updated." }
-        format.json { render :show, status: :ok, location: @chat_interface }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @chat_interface.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def destroy
-    @chat_interface.destroy
-
-    respond_to do |format|
-      format.html { redirect_to chat_interfaces_url, notice: "Chat interface was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to root_path
   end
 
   private

@@ -1,32 +1,11 @@
-<%= form_with(model: message, class: "contents") do |form| %>
-  <% if message.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(message.errors.count, "error") %> prohibited this message from being saved:</h2>
-
-      <ul>
-        <% message.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<%= turbo_frame_tag "#{dom_id(chat_interface)}_message_form" do %>
+  <%= form_with(model: Message.new, url: [chat_interface, chat_interface.messages.new]) do |form| %>
+    <div class="my-5 flex">
+      <%= form.text_field :content, rows: 4, class: "block shadow rounded-md border border-gray-200 outline-none px-3 mr-2 py-2 w-full", autofocus: true, "x-on:keydown.cmd.enter" => "$event.target.form.requestSubmit();" %>
+      <%= form.button type: :submit, class: "rounded-lg py-3 px-5 bg-red-500 text-white inline-block font-medium cursor-pointer" do %>
+        <i class="fas fa-paper-plane"></i>
+        <span class="pl-2">Enter</span>
+      <% end %>
     </div>
   <% end %>
-
-  <div class="my-5">
-    <%= form.label :chat_interfaces_id %>
-    <%= form.text_field :chat_interfaces_id, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :content %>
-    <%= form.text_field :content, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :type %>
-    <%= form.number_field :type, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="inline">
-    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
-  </div>
 <% end %>

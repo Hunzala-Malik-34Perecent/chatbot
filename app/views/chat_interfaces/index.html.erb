@@ -1,14 +1,28 @@
-<div class="w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-  <% end %>
+<% if user_signed_in? %>
+  <div class="flex">
+  <div class="flex flex-col h-screen bg-gray-200">
+    <div class="px-4 py-3 border-b border-gray-300">
+      <%= button_to 'New Chat Room', chat_interfaces_path , :method => :post , class: 'px-2 py-1 bg-blue-500 text-white rounded' %>
+    </div>
+    <div class="flex-1 overflow-y-auto">
+      <% @chat_interfaces.each do |chat_interface| %>
+        <%= link_to chat_interface.id, chat_interface_path(chat_interface), class: "block px-4 py-2 border-b border-gray-300 hover:bg-gray-100 hover:text-black #{chat_interface.eql?(@chat_interface) ? "bg-red-500 text-white hover:bg-red-100" : ""} ", data: { turbo_frame: "chat-room-show-frame", turbo_frame_target: "_self" } %>
+      <% end %>
+    </div>
+    <div class="px-4 py-3 border-t border-gray-300">
+    <%= link_to 'Sign out', destroy_user_session_path, class: 'px-2 py-1 bg-red-500 text-white rounded', data: { turbo_method: :delete } %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Chat interfaces</h1>
-    <%= link_to 'New chat interface', new_chat_interface_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+    </div>
   </div>
 
-  <div id="chat_interfaces" class="min-w-full">
-    <%= render @chat_interfaces %>
+  <div class="flex-1 bg-white p-4 h-screen">
+    <turbo-frame id="chat-room-show-frame" src="" class="w-full h-full">
+      <%if @chat_interface%>
+        <%= render partial: "chat_interfaces/show", locals: { chat_interface: @chat_interface } %>
+      <%end%>
+    </turbo-frame>
   </div>
 </div>
+<% else %>
+  <%= link_to 'Sign in', new_user_session_path %>
+<% end %>

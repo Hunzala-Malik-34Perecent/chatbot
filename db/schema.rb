@@ -22,12 +22,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_05_221527) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.bigint "chat_interfaces_id", null: false
+    t.bigint "chat_interface_id", null: false
     t.string "content"
-    t.integer "type"
+    t.integer "user_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["chat_interfaces_id"], name: "index_messages_on_chat_interfaces_id"
+    t.index ["chat_interface_id"], name: "index_messages_on_chat_interface_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -43,5 +43,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_05_221527) do
   end
 
   add_foreign_key "chat_interfaces", "users"
-  add_foreign_key "messages", "chat_interfaces", column: "chat_interfaces_id"
+  add_foreign_key "messages", "chat_interfaces"
 end
