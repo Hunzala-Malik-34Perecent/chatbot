@@ -1,6 +1,6 @@
-<div class="mx-auto w-full h-full flex">
-    <div class="mx-auto max-w-lg px-6 ">
-      <ul role="list" class="overflow-y-auto max-h-[48vh] flex flex-col-reverse">
+<div class="w-full h-full flex justify-center items-end">
+    <div>
+      <ul role="list" class="overflow-y-auto flex flex-col-reverse no-scrollbar">
         <%= turbo_stream_from "#{dom_id(chat_interface)}_messages" %>
         <div id="<%= dom_id(chat_interface) %>_messages">
           <%= render chat_interface.messages %>

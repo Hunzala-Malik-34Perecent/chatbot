@@ -1,9 +1,8 @@
 <%= turbo_frame_tag "#{dom_id(chat_interface)}_message_form" do %>
   <%= form_with(model: Message.new, url: [chat_interface, chat_interface.messages.new]) do |form| %>
     <div class="my-5 flex">
-      <%= form.text_field :content, rows: 4, class: "block shadow rounded-md border border-gray-200 outline-none px-3 mr-2 py-2 w-full", autofocus: true, "x-on:keydown.cmd.enter" => "$event.target.form.requestSubmit();" %>
-      <%= form.button type: :submit, class: "rounded-lg py-3 px-5 bg-red-500 text-white inline-block font-medium cursor-pointer" do %>
-        <i class="fas fa-paper-plane"></i>
+      <%= form.text_field :content, rows: 4, class: "block shadow rounded-md border border-gray-200 outline-none px-3 mr-2 py-2 flex-grow", autofocus: true, "x-on:keydown.cmd.enter" => "$event.target.form.requestSubmit();" %>
+      <%= form.button type: :submit, class: "rounded-lg py-3 px-5 bg-gray-500 hover:bg-gray-700 text-white inline-block font-medium cursor-pointer" do %>
         <span class="pl-2">Enter</span>
       <% end %>
     </div>

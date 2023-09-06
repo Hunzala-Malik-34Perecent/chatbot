@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MessagesController < ApplicationController
   include ActionView::RecordIdentifier
 
@@ -9,7 +11,7 @@ class MessagesController < ApplicationController
 
   private
 
-    def message_params
-      params.require(:message).permit(:chat_interfaces_id, :content)
-    end
+  def message_params
+    params.require(:message).permit(:chat_interfaces_id, :content)
+  end
 end
