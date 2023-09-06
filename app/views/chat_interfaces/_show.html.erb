@@ -1,5 +1,5 @@
 <div class="w-full h-full flex justify-center items-end">
-    <div>
+    <div class="w-full">
       <ul role="list" class="overflow-y-auto flex flex-col-reverse no-scrollbar">
         <%= turbo_stream_from "#{dom_id(chat_interface)}_messages" %>
         <div id="<%= dom_id(chat_interface) %>_messages">

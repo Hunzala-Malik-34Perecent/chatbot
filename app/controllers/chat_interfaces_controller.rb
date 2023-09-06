@@ -5,6 +5,7 @@ class ChatInterfacesController < ApplicationController
 
   def index
     @chat_interfaces = ChatInterface.order(created_at: :desc)
+    @chat_interface = ChatInterface.last
   end
 
   def show

@@ -1,10 +1,10 @@
 <div id="<%= dom_id(message) %>_messages">
   <% if message.user? %>
-    <div class="bg-gray-700 rounded-lg m-8 text-white p-4">
+    <div class="bg-gray-700 rounded-xl m-8 max-w-4 text-white p-4" style="margin-left: 14rem">
       <%= message.content %>
     </div>
   <% else %>
-    <div class="bg-gray-200 rounded-lg m-8 p-4">
+    <div class="bg-gray-200 rounded-xl m-8 p-4" style="margin-right: 14rem">
       <%= message.content %>
     </div>
   <% end %>

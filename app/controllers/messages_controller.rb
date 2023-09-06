@@ -4,14 +4,21 @@ class MessagesController < ApplicationController
   include ActionView::RecordIdentifier
 
   def create
-    @message = Message.create!(message_params.merge(user_type: 'user', chat_interface_id: params[:chat_interface_id]))
-    OpenAiJob.perform_async(@message.chat_interface_id)
-    respond_to(&:turbo_stream)
+    @chat_interface = ChatInterface.find(params[:chat_interface_id])
+    @message = @chat_interface.messages.build(message_params)
+    @message.role = 'user'
+
+    if @message.save!
+      OpenAiJob.perform_async(@chat_interface.id)
+      respond_to(&:turbo_stream)
+    else
+      render json: { errors: @message.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   private
 
   def message_params
-    params.require(:message).permit(:chat_interfaces_id, :content)
+    params.require(:message).permit(:content)
   end
 end

@@ -6,7 +6,7 @@
     </div>
     <div class="flex-1 overflow-y-auto no-scrollbar">
       <% @chat_interfaces.each do |chat_interface| %>
-        <%= link_to chat_interface.id, chat_interface_path(chat_interface), class: "block px-4 py-2 text-center hover:bg-gray-900 text-white shadow-inner #{chat_interface.eql?(@chat_interface) ? "bg-red-500 text-white hover:bg-red-100" : ""} ", data: { turbo_frame: "chat-room-show-frame", turbo_frame_target: "_self" } %>
+          <%= render partial: "chat_interfaces/chat_interface", locals: { chat_interface: chat_interface } %>
       <% end %>
     </div>
     <div class="px-4 py-5 border-t border-gray-300 flex justify-center items-center shadow-lg">
@@ -14,14 +14,15 @@
     </div>
   </div>
 
-  <div class="flex-1 p-4 h-screen">
-    <turbo-frame id="chat-room-show-frame">
+  <div class="flex-1 py-4 px-12 h-screen">
+    <turbo-frame id="chat-interface-show-frame">
       <%if @chat_interface%>
         <%= render partial: "chat_interfaces/show", locals: { chat_interface: @chat_interface } %>
       <%end%>
     </turbo-frame>
   </div>
 </div>
+
 <% else %>
   <%= link_to 'Sign in', new_user_session_path %>
 <% end %>
